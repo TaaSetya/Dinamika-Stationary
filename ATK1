@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATK Dinamika Stationary</title>
+<style>
+:root{--navy:#17324d;--blue:#2463a6;--mint:#dff5ed;--bg:#f5f7fa}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#243447;background:var(--bg)}
+header{background:var(--navy);color:white;padding:22px 6%}
+.brand{font-size:24px;font-weight:800}
+.brand span{color:#72dfbd}
+header p{margin:7px 0 0;color:#d5e3ef}
+nav{background:white;padding:14px 6%;display:flex;gap:22px;flex-wrap:wrap;border-bottom:1px solid #e4e9ef}
+nav a{color:var(--navy);text-decoration:none;font-weight:bold}
+.hero{padding:55px 6%;background:linear-gradient(120deg,#e1f5ef,#e9f0fb)}
+.hero h1{font-size:clamp(30px,5vw,48px);max-width:650px;margin:0 0 15px;color:var(--navy)}
+.hero p{max-width:600px;line-height:1.7}
+.btn{display:inline-block;background:var(--blue);color:white;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
+main{max-width:1150px;margin:auto;padding:35px 20px}
+.tools{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+input,select{padding:12px;border:1px solid #ccd6e0;border-radius:9px;font-size:15px;background:white}
+input{flex:1;min-width:190px}
+h2{color:var(--navy)}
+.categories{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.cat{border:1px solid #d4dfe7;border-radius:30px;padding:9px 14px;background:white;cursor:pointer}
+.cat.active{background:var(--navy);color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.card{background:white;border:1px solid #e3e9ef;border-radius:16px;padding:20px;box-shadow:0 5px 20px #1836520a}
+.emoji{height:100px;background:var(--mint);border-radius:12px;display:grid;place-items:center;font-size:48px}
+.card h3{margin-bottom:6px;color:var(--navy)}
+.card p{color:#647386;line-height:1.5;min-height:40px}
+.card small{color:#13836b;font-weight:bold}
+.card button{width:100%;margin-top:12px}
+.info{margin-top:35px;background:white;padding:25px;border-radius:16px;line-height:1.7}
+footer{text-align:center;padding:25px;background:var(--navy);color:#d5e3ef;margin-top:35px}
+@media(max-width:500px){header{padding:20px}.hero{padding:38px 20px}nav{gap:14px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">ATK <span>DINAMIKA</span></div>
+  <p>Stationary · Perlengkapan Sekolah dan Kantor</p>
+</header>
+<nav>
+  <a href="#beranda">Beranda</a>
+  <a href="#produk">Katalog Produk</a>
+  <a href="#tentang">Tentang Kami</a>
+  <a href="#kontak">Kontak</a>
+</nav>
+<section class="hero" id="beranda">
+  <h1>Lengkapi kebutuhan alat tulis Anda.</h1>
+  <p>Temukan perlengkapan sekolah dan kantor di ATK Dinamika Stationary. Jelajahi katalog kami dan hubungi kami untuk menanyakan harga serta ketersediaan barang.</p>
+  <a class="btn" href="#produk">Jelajahi Produk ↓</a>
+</section>
+<main>
+<section id="produk">
+  <h2>Katalog Produk</h2>
+  <p>Pilih kategori atau cari nama barang yang Anda butuhkan.</p>
+  <div class="tools">
+    <input id="search" placeholder="Cari pulpen, buku, kertas..." aria-label="Cari produk">
+    <select id="sort" aria-label="Urutkan produk">
+      <option value="default">Urutan standar</option>
+      <option value="az">Nama A–Z</option>
+    </select>
+  </div>
+  <div class="categories" id="categories"></div>
+  <div class="grid" id="products"></div>
+</section>
+<section class="info" id="tentang">
+  <h2>Tentang ATK Dinamika Stationary</h2>
+  <p>Kami menyediakan katalog perlengkapan alat tulis dan kebutuhan kantor. Silakan hubungi kami untuk informasi produk, harga, stok, dan pemesanan.</p>
+</section>
+<section class="info" id="kontak">
+  <h2>Hubungi Kami</h2>
+  <p>Ingin bertanya atau melakukan pemesanan? Hubungi kami melalui WhatsApp.</p>
+  <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Pesan via WhatsApp</a>
+  <p><small>Catatan: nomor WhatsApp harus diatur sebelum website dipublikasikan.</small></p>
+</section>
+</main>
+<footer>© <span id="year"></span> ATK Dinamika Stationary</footer>
+<script>
+const NOMOR_WA = "6281234567890"; // Ganti dengan nomor WhatsApp bisnis
+const data = [
+ {nama:"Pulpen",kategori:"Alat Tulis",ikon:"🖊️"},
+ {nama:"Pensil",kategori:"Alat Tulis",ikon:"✏️"},
+ {nama:"Spidol",kategori:"Alat Tulis",ikon:"🖍️"},
+ {nama:"Buku Tulis",kategori:"Kertas & Buku",ikon:"📓"},
+ {nama:"Kertas HVS",kategori:"Kertas & Buku",ikon:"📄"},
+ {nama:"Buku Agenda",kategori:"Kertas & Buku",ikon:"📔"},
+ {nama:"Map Dokumen",kategori:"Perlengkapan Kantor",ikon:"🗂️"},
+ {nama:"Stapler",kategori:"Perlengkapan Kantor",ikon:"📎"},
+ {nama:"Amplop",kategori:"Perlengkapan Kantor",ikon:"✉️"}
+];
+let kategoriAktif="Semua";
+const el=id=>document.getElementById(id);
+function renderKategori(){
+ const list=["Semua",...new Set(data.map(x=>x.kategori))];
+ el("categories").innerHTML=list.map(k=>
+ `<button class="cat ${k===kategoriAktif?"active":""}" data-k="${k}">${k}</button>`
+ ).join("");
+ el("categories").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+ kategoriAktif=b.dataset.k;renderKategori();renderProduk();
+ });
+}
+function renderProduk(){
+ let q=el("search").value.toLowerCase();
+ let items=data.filter(x=>(kategoriAktif==="Semua"||x.kategori===kategoriAktif)&&x.nama.toLowerCase().includes(q));
+ if(el("sort").value==="az")items.sort((a,b)=>a.nama.localeCompare(b.nama,"id"));
+ el("products").innerHTML=items.length?items.map(x=>`
+ <article class="card">
+ <div class="emoji">${x.ikon}</div>
+ <h3>${x.nama}</h3>
+ <p>${x.kategori}</p>
+ <small>Harga dan stok: hubungi kami</small>
+ <button class="btn order" data-n="${x.nama}">Tanyakan Produk</button>
+ </article>`).join(""):"<p>Produk tidak ditemukan. Coba kata kunci lain.</p>";
+ el("products").querySelectorAll(".order").forEach(b=>b.onclick=()=>pesan(b.dataset.n));
+}
+function pesan(nama){
+ if(NOMOR_WA==="6281234567890"){
+ alert("Nomor WhatsApp masih contoh. Ganti NOMOR_WA di kode website dengan nomor bisnis Anda.");
+ return;
+ }
+ window.open("https://wa.me/"+NOMOR_WA+"?text="+encodeURIComponent("Halo ATK Dinamika Stationary, saya ingin bertanya tentang "+nama+"."),"_blank");
+}
+el("wa").onclick=e=>{
+ if(NOMOR_WA==="6281234567890"){e.preventDefault();alert("Silakan ganti nomor WhatsApp contoh di kode website terlebih dahulu.");}
+ else el("wa").href="https://wa.me/"+NOMOR_WA+"?text="+encodeURIComponent("Halo, saya ingin bertanya tentang produk ATK.");
+};
+el("search").addEventListener("input",renderProduk);
+el("sort").addEventListener("change",renderProduk);
+el("year").textContent=new Date().getFullYear();
+renderKategori();renderProduk();
+</script>
+</body>
+</html>
